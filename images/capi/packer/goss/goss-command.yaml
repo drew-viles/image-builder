@@ -11,6 +11,13 @@ command:
     stdout: []
     stderr: []
     timeout: 0
+{{if semverCompare ">=2.0.0" .Vars.containerd_version}}
+  grep -E 'image_pull_progress_timeout = "{{.Vars.containerd_image_pull_progress_timeout}}"' /etc/containerd/config.toml:
+    exit-status: 0
+    stdout: [ ]
+    stderr: [ ]
+    timeout: 0
+{{end}}
 {{if contains "lunatic" .Vars.containerd_wasm_shims_runtimes}}
   containerd-shim-lunatic-v1:
     exit-status: 1
@@ -204,6 +211,12 @@ command:
     exit-status: 0
     stdout:
     - "sandbox = \"{{.Vars.pause_image}}\""
+    timeout: 30000
+  Correct Containerd image pull timeout config:
+    exec: "powershell -command \"Get-Content 'C:\\Program Files\\containerd\\config.toml' | Select-String -SimpleMatch 'image_pull_progress_timeout = \\\"{{.Vars.containerd_image_pull_progress_timeout}}\\\"'\""
+    exit-status: 0
+    stdout:
+    - "image_pull_progress_timeout = \"{{.Vars.containerd_image_pull_progress_timeout}}\""
     timeout: 30000
   Correct Containerd CNI conf_dir:
     exec: "powershell -command \"Get-Content 'C:\\Program Files\\containerd\\config.toml' | Select-String -SimpleMatch 'conf_dir = \\\"C:/etc/cni/net.d\\\"'\""

@@ -8,7 +8,7 @@
   "iso_file": "{{env `ISO_FILE`}}",
   "iso_url": "https://releases.ubuntu.com/noble/ubuntu-24.04.4-live-server-amd64.iso",
   "os_display_name": "Ubuntu 24.04",
-  "source_image": "ubuntu-20-04-x64",
+  "source_image": "ubuntu-24-04-x64",
   "unmount_iso": "true",
   "version": "24.04"
 }
